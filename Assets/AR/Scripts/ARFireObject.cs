@@ -6,8 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-public class ARFireObject : MonoBehaviour
-{
+public class ARFireObject : MonoBehaviour {
 	[SerializeField] private XROrigin xrOrigin;
 	[SerializeField] private GameObject[] prefabs;
 
