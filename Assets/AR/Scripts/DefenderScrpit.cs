@@ -21,17 +21,15 @@ public class DefenderScrpit : MonoBehaviour
         Vector3 playerFromBasket = (basket.position - playerPos.position).normalized;
 
         Vector3 target = playerPos.position + playerFromBasket * 3f;
-        //float distance = Vector3.Distance(this.transform.position, playerPos.position);
-        //if (distance >= 1f)
-        //{
-        //    Vector3 newPos = Vector3.MoveTowards(this.transform.position, playerPos.position, 0.5f * Time.deltaTime);
-        //    rb.MovePosition(newPos);
-        //}
-        rb.MovePosition(target);
+        Vector3 tagertXZ = new Vector3(target.x, 0, target.z);
+     
+        Vector3 newPos = Vector3.MoveTowards(rb.position, tagertXZ, 3f * Time.deltaTime);
+        rb.MovePosition(newPos);
         currentTime -= Time.deltaTime;
+        Debug.Log(target);
         if (currentTime <= 0)
         {
-            Vector3 up = new Vector3(0, 3, 0);
+            Vector3 up = new Vector3(0, 10, 0);
             rb.AddRelativeForce(up, ForceMode.Impulse);
             currentTime = jumpTimmer;
         }
