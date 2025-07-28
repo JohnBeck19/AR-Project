@@ -11,6 +11,7 @@ public class BallBtn : MonoBehaviour {
 
     private Vector2 startPos;
     private bool touch = false;
+    private bool shooting = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
