@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e8345d03503c5b749a867782668cb260, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -152,3 +152,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f39de26e9fdb3564fbbe1c7fd5a092b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BasketBall
+  lifeTime: 2
