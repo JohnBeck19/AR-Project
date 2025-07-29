@@ -9,6 +9,7 @@ public class BasketBall : MonoBehaviour {
     void Update() {
         
     }
+
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.CompareTag("Hoop")) {
             ballBtn.updateScore(1);

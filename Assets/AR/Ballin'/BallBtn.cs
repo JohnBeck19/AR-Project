@@ -47,7 +47,7 @@ public class BallBtn : MonoBehaviour {
             Ray ray = new Ray(startPos, endPos);
 			GameObject spawnedBall = Instantiate(ball, xrOrigin.Camera.transform.position, xrOrigin.Camera.transform.rotation);
             spawnedBall.GetComponent<BasketBall>().ballBtn = this;
-            spawnedBall.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 100, ForceMode.Impulse);
+            spawnedBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(ray.direction.x, ray.direction.y, 1) * ray.direction.magnitude, ForceMode.Impulse);
             Destroy(spawnedBall, 3f);
 		}
 
@@ -60,6 +60,4 @@ public class BallBtn : MonoBehaviour {
         score += newScore;
         scoreTxt.text = score.ToString("00");
     }
-
-    
 }
