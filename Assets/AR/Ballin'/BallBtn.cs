@@ -47,7 +47,7 @@ public class BallBtn : MonoBehaviour {
             Ray ray = new Ray(startPos, endPos);
 			GameObject spawnedBall = Instantiate(ball, xrOrigin.Camera.transform.position, xrOrigin.Camera.transform.rotation);
             spawnedBall.GetComponent<BasketBall>().ballBtn = this;
-            spawnedBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(ray.direction.x, ray.direction.y, 1) * ray.direction.magnitude, ForceMode.Impulse);
+            spawnedBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(ray.direction.x, ray.direction.y, 1) * ray.direction.magnitude * 10, ForceMode.Impulse);
             Destroy(spawnedBall, 3f);
 		}
 
