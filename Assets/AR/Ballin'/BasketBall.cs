@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class BasketBall : MonoBehaviour {
-    [SerializeField] float lifeTime = 2;
+    [SerializeField] float lifeTime = 3;
 
     void Start() {
         
