@@ -56,7 +56,7 @@ public class DefenderScrpit : MonoBehaviour
     {
         Vector3 jumpVector = new Vector3(0, jumpForce, 0);
         animator.SetTrigger("Jump");
-        rb.AddForce(jumpVector, ForceMode.Impulse);
+        rb.AddRelativeForce(jumpVector, ForceMode.Impulse);
         Debug.Log("Defender jumped!");
     }
 }

@@ -30,8 +30,8 @@ public class BallBtn : MonoBehaviour {
     void Update() {
         if (ts != null && ts.touches.Count > 0 &&
             ts.touches[0].phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Began &&
-            !shooting && ((ts.touches[0].position.x.value > 600 && ts.touches[0].position.x.value < 900) 
-            && (ts.touches[0].position.y.value <= 300)) ) {
+            !shooting && ((ts.touches[0].position.x.value > 200 && ts.touches[0].position.x.value < 1300) 
+            && (ts.touches[0].position.y.value <= 600)) ) {
             touch = true;
             shooting = true;
         }
@@ -47,7 +47,7 @@ public class BallBtn : MonoBehaviour {
             Ray ray = new Ray(startPos, endPos);
 			GameObject spawnedBall = Instantiate(ball, xrOrigin.Camera.transform.position, xrOrigin.Camera.transform.rotation);
             spawnedBall.GetComponent<BasketBall>().ballBtn = this;
-            spawnedBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(ray.direction.x, ray.direction.y, 1) * ray.direction.magnitude * 10, ForceMode.Impulse);
+            spawnedBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(ray.direction.x - 3, ray.direction.y, 1) * ray.direction.magnitude * 5, ForceMode.Impulse);
             Destroy(spawnedBall, 3f);
 		}
 
