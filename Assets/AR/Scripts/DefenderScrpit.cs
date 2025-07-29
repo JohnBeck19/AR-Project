@@ -31,21 +31,23 @@ public class DefenderScrpit : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isInitialized || basket == null || playerPos == null) return;
+        //if (!isInitialized || basket == null || playerPos == null) return;
 
-        // Position defender between player and basket
-        Vector3 midPoint = Vector3.Lerp(playerPos.position, basket.position, 0.5f);
-        Vector3 targetPosition = new Vector3(midPoint.x, transform.position.y, midPoint.z);
-        
-        // Move towards the target position
-        Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-        rb.MovePosition(newPosition);
-        transform.LookAt(playerPos);
-
-        // Handle jumping timer
         currentJumpTimer -= Time.deltaTime;
-        
-        if (currentJumpTimer <= 0)
+        if (currentJumpTimer >= 0)
+        {
+            // Position defender between player and basket
+            Vector3 midPoint = Vector3.Lerp(playerPos.position, basket.position, 0.5f);
+            Vector3 targetPosition = new Vector3(midPoint.x, transform.position.y, midPoint.z);
+
+            // Move towards the target position
+            Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            rb.MovePosition(newPosition);
+            transform.LookAt(playerPos);
+
+            
+        }
+        else
         {
             Jump();
             currentJumpTimer = jumpInterval;
