@@ -23,7 +23,7 @@ public class BallBtn : MonoBehaviour {
         startPos = transform.position;
         ts = Touchscreen.current;
         score = 0;
-        scoreTxt.text = "" + score;
+        scoreTxt.text = score.ToString("00");
 	}
 
     void Update() {
@@ -43,7 +43,8 @@ public class BallBtn : MonoBehaviour {
             Vector3 dir = (endPos - startPos).normalized;
             Ray ray = new Ray(startPos, endPos);
             ball.GetComponent<Rigidbody>().AddRelativeForce(ray.direction * 100, ForceMode.Impulse);
-			Instantiate(ball, xrOrigin.Camera.transform.position, xrOrigin.Camera.transform.rotation);
+			GameObject ballInstance = Instantiate(ball, xrOrigin.Camera.transform.position, xrOrigin.Camera.transform.rotation);
+            ballInstance.GetComponent<BasketBall>().ballBtn = this;
             gameObject.transform.position = startPos;
 		}
 
@@ -54,6 +55,8 @@ public class BallBtn : MonoBehaviour {
 
     public void updateScore(int newScore) {
         score += newScore;
-        scoreTxt.text = "" + score;
+        scoreTxt.text = score.ToString("00");
     }
+
+    
 }
