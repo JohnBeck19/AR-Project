@@ -3,35 +3,57 @@ using UnityEngine;
 public class DefenderScrpit : MonoBehaviour
 {
     [SerializeField] Transform playerPos;
-    [SerializeField] Transform basket;
-    [SerializeField] float jumpTimmer;
-    float currentTime;
+    [SerializeField] float jumpInterval = 5f; // Time between jumps in seconds
+    [SerializeField] float jumpForce = 10f; // Force of the jump
+    [SerializeField] float moveSpeed = 3f; // Speed of movement
+    
+    Transform basket;
+    float currentJumpTimer;
     Rigidbody rb;
+    bool isInitialized = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        currentTime = jumpTimmer;
+        currentJumpTimer = jumpInterval;
+        this.gameObject.SetActive(false);
     }
 
+    public void onNetSpawn()
+    {
+        Debug.Log("Defender spawned!");
+        this.gameObject.SetActive(true);
+        basket = GameObject.Find("Net").transform;
+        isInitialized = true;
+        Debug.Log("Basket position: " + basket.position);
+    }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        Vector3 playerFromBasket = (basket.position - playerPos.position).normalized;
+        if (!isInitialized || basket == null || playerPos == null) return;
 
-        Vector3 target = playerPos.position + playerFromBasket * 3f;
-        Vector3 tagertXZ = new Vector3(target.x, 0, target.z);
-     
-        Vector3 newPos = Vector3.MoveTowards(rb.position, tagertXZ, 3f * Time.deltaTime);
-        rb.MovePosition(newPos);
-        currentTime -= Time.deltaTime;
-        Debug.Log(target);
-        if (currentTime <= 0)
+        // Position defender between player and basket
+        Vector3 midPoint = Vector3.Lerp(playerPos.position, basket.position, 0.5f);
+        Vector3 targetPosition = new Vector3(midPoint.x, transform.position.y, midPoint.z);
+        
+        // Move towards the target position
+        Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+        rb.MovePosition(newPosition);
+
+        // Handle jumping timer
+        currentJumpTimer -= Time.deltaTime;
+        
+        if (currentJumpTimer <= 0)
         {
-            Vector3 up = new Vector3(0, 10, 0);
-            rb.AddRelativeForce(up, ForceMode.Impulse);
-            currentTime = jumpTimmer;
+            Jump();
+            currentJumpTimer = jumpInterval;
         }
+    }
+
+    void Jump()
+    {
+        Vector3 jumpVector = new Vector3(0, jumpForce, 0);
+        rb.AddForce(jumpVector, ForceMode.Impulse);
+        Debug.Log("Defender jumped!");
     }
 }
