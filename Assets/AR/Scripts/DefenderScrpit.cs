@@ -6,6 +6,7 @@ public class DefenderScrpit : MonoBehaviour
     [SerializeField] float jumpInterval = 5f; // Time between jumps in seconds
     [SerializeField] float jumpForce = 10f; // Force of the jump
     [SerializeField] float moveSpeed = 3f; // Speed of movement
+    [SerializeField] Animator animator;
     
     Transform basket;
     float currentJumpTimer;
@@ -39,6 +40,7 @@ public class DefenderScrpit : MonoBehaviour
         // Move towards the target position
         Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
         rb.MovePosition(newPosition);
+        transform.LookAt(playerPos);
 
         // Handle jumping timer
         currentJumpTimer -= Time.deltaTime;
@@ -53,6 +55,7 @@ public class DefenderScrpit : MonoBehaviour
     void Jump()
     {
         Vector3 jumpVector = new Vector3(0, jumpForce, 0);
+        animator.SetTrigger("Jump");
         rb.AddForce(jumpVector, ForceMode.Impulse);
         Debug.Log("Defender jumped!");
     }
