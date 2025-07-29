@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using Unity.XR.CoreUtils;
 using UnityEngine;
@@ -29,26 +30,28 @@ public class BallBtn : MonoBehaviour {
     void Update() {
         if (ts != null && ts.touches.Count > 0 &&
             ts.touches[0].phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Began &&
-            !shooting /*&&*/) {
+            !shooting && ((ts.touches[0].position.x.value > 600 && ts.touches[0].position.x.value < 900) 
+            && (ts.touches[0].position.y.value <= 300)) ) {
             touch = true;
             shooting = true;
         }
 
         if (ts != null && ts.touches.Count > 0 &&
-			ts.touches[0].phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Ended &&
-            shooting) {
+			ts.touches[0].phase.ReadValue() == UnityEngine.InputSystem.TouchPhase.Ended 
+            && shooting) {
             touch = false;
             shooting = false;
+            gameObject.transform.position = startPos;
             Vector2 endPos = ts.touches[0].position.value;
             Vector3 dir = (endPos - startPos).normalized;
             Ray ray = new Ray(startPos, endPos);
-            ball.GetComponent<Rigidbody>().AddRelativeForce(ray.direction * 100, ForceMode.Impulse);
-			Instantiate(ball, xrOrigin.Camera.transform.position, xrOrigin.Camera.transform.rotation);
-            gameObject.transform.position = startPos;
+			GameObject spawnedBall = Instantiate(ball, xrOrigin.Camera.transform.position, xrOrigin.Camera.transform.rotation);
+            spawnedBall.GetComponent<Rigidbody>().AddRelativeForce(Vector3.forward * 100, ForceMode.Impulse);
+            Destroy(spawnedBall, 3f);
 		}
 
         if (touch) {
-            gameObject.transform.position = Touchscreen.current.touches[0].position.value;
+			gameObject.transform.position = ts.touches[0].position.value;
 		}
     }
 
