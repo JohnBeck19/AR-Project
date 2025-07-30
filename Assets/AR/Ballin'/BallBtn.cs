@@ -17,8 +17,12 @@ public class BallBtn : MonoBehaviour {
     private bool touch = false;
     private bool shooting = false;
     private int score = 0;
-    
-    void Start() {
+
+    [SerializeField] float xForce = 0.0f;
+    [SerializeField] float yForce = 0.0f;
+    [SerializeField] float zForce = 0.0f;
+
+	void Start() {
 		xrOrigin ??= GetComponent<XROrigin>();
         inputManager ??= GetComponent<InputActionManager>();
         startPos = transform.position;
@@ -43,12 +47,15 @@ public class BallBtn : MonoBehaviour {
             shooting = false;
             gameObject.transform.position = startPos;
             Vector2 endPos = ts.touches[0].position.value;
-            Vector3 dir = (endPos - startPos).normalized;
             Ray ray = new Ray(startPos, endPos);
+            //float xForce = Mathf.Clamp((), -0.5f, 0.5f);
+            //float yForce = (endPos.y / Screen.height) * 3;
+            //float zForce = 3 * (endPos.y / Screen.height);
 			GameObject spawnedBall = Instantiate(ball, xrOrigin.Camera.transform.position, xrOrigin.Camera.transform.rotation);
             spawnedBall.GetComponent<BasketBall>().ballBtn = this;
-            spawnedBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(ray.direction.x - 3, ray.direction.y, 1) * ray.direction.magnitude * 5, ForceMode.Impulse);
-            Destroy(spawnedBall, 3f);
+            spawnedBall.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(xForce, yForce, zForce), ForceMode.Impulse);
+            Destroy(spawnedBall, 2f);
+            Debug.Log($"X Force { xForce } Y Force { yForce } Z Force { zForce }");
 		}
 
         if (touch) {
