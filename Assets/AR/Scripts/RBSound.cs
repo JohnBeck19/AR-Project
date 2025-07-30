@@ -3,6 +3,7 @@ using UnityEngine;
 public class RBSound : MonoBehaviour
 {
     [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip audioClip;
 
     Rigidbody rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -15,7 +16,7 @@ public class RBSound : MonoBehaviour
     {
         if (rb.linearVelocity.magnitude > 2 || rb.angularVelocity.magnitude > 2)
         {
-            audioSource.Play();
+            audioSource.PlayOneShot(audioClip);
         }
 
 
