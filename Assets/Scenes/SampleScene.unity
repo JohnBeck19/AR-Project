@@ -6569,9 +6569,9 @@ MonoBehaviour:
   inputManager: {fileID: 331264287}
   scoreTxt: {fileID: 390772008}
   ball: {fileID: 7908307709784082487, guid: 0c6e94919c3dc0d40becff68557be16a, type: 3}
-  xForce: 1
-  yForce: 8
-  zForce: 1
+  xForce: 0.6
+  yForce: 4
+  zForce: 2
 --- !u!114 &1604539876
 MonoBehaviour:
   m_ObjectHideFlags: 0
